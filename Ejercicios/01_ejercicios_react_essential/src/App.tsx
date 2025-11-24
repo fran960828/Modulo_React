@@ -6,11 +6,22 @@ import { AlertMessage } from "./components/AlertMessage";
 import { ActionButton } from "./components/ActionButton";
 import { TagChildren } from "./components/TagChildren";
 import { Contador } from "./components/Contador";
+import ToggleMessage  from "./components/ToggleMessage";
+import { MultiActionButton } from "./components/MultiActionButton";
 import { useState } from "react";
+
 function App() {
   const [valorActual, setvalorActual] = useState(parseInt("0"));
+  const [mostrar,setMostrar]=useState(false)
   function onAction() {
     console.log("Cambio de color ejecutado");
+  }
+  function control(){
+    setMostrar(!mostrar)
+  }
+  function handleSelectColor(color:string){
+    console.log(color)
+    
   }
   return (
     <>
@@ -27,6 +38,13 @@ function App() {
         label={valorActual}
         incrementador={() => setvalorActual(valorActual + 1)}
       />
+      <ToggleMessage message="parrafo que aparece y desaparece" status={mostrar} toggleIn={control} />
+      <div>
+      <MultiActionButton onSelectColor={()=>handleSelectColor('red')}>red</MultiActionButton>
+      <MultiActionButton onSelectColor={()=>handleSelectColor('blue')}>blue</MultiActionButton>
+      <MultiActionButton onSelectColor={()=>handleSelectColor('green')}>green</MultiActionButton>
+      </div>
+        
     </>
   );
 }

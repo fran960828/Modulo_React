@@ -1,0 +1,10 @@
+.success {
+  color: green;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 2rem;
+}
+.failed {
+  color: red;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 2rem;
+}

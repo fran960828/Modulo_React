@@ -1,0 +1,11 @@
+.selected {
+  border: 3px solid blue;
+  width: 100px;
+  height: 100px;
+}
+
+.unselected {
+  border: 1px solid black;
+  width: 100px;
+  height: 100px;
+}

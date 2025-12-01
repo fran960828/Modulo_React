@@ -1,11 +1,8 @@
 import { useState } from "react";
+import type { IplayerProp } from "../modals/Modals";
 
-interface IplayerProp {
-  initialName: string;
-  symbol: string;
-}
 
-export default function Players({ initialName, symbol }: IplayerProp) {
+export default function Players({ initialName, symbol,isActive,onSelectedName}: IplayerProp) {
   const [playerName, setPlayerName] = useState(initialName);
   const [isEditing, setIsEditing] = useState(false);
   function handlePlayerName(event: any) {
@@ -13,9 +10,12 @@ export default function Players({ initialName, symbol }: IplayerProp) {
   }
   function handleEditButton() {
     setIsEditing((editing) => !editing);
+    if (isEditing){
+      onSelectedName(symbol,playerName)
+    }
   }
 
-  let editingPlayerName = <span>{playerName}</span>;
+  let editingPlayerName = <span className="player_name">{playerName}</span>;
   if (isEditing) {
     editingPlayerName = (
       <input
@@ -28,9 +28,9 @@ export default function Players({ initialName, symbol }: IplayerProp) {
   }
 
   return (
-    <li>
-      <span className="player-name">{editingPlayerName}</span>
-      <span>{symbol}</span>
+    <li className={isActive ? 'active':undefined}>
+      <span className="player">{editingPlayerName}</span>
+      <span className="player_symbol">{symbol}</span>
       <button onClick={handleEditButton}>{isEditing ? "save" : "edit"}</button>
     </li>
   );

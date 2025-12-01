@@ -1,8 +1,7 @@
-interface IboardProp {
-  board: (string | null)[][];
-}
+import type { IboardProp } from "../modals/Modals";
 
-export default function Gameboard({ board }: IboardProp) {
+
+export default function Gameboard({ board,onSelectTurns }: IboardProp) {
   return (
     <ol id="game-board">
       {board.map((row, rowIndex) => (
@@ -10,7 +9,8 @@ export default function Gameboard({ board }: IboardProp) {
           <ol>
             {row.map((playerSymbol, colIndex) => (
               <li key={colIndex}>
-                <button>{playerSymbol}</button>
+                <button onClick={()=>onSelectTurns(rowIndex,colIndex)}
+                  disabled={playerSymbol!==null}>{playerSymbol}</button>
               </li>
             ))}
           </ol>

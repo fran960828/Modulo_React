@@ -1,16 +1,11 @@
 rol: Experto en React con typescript. consulta: Haz una documentación para una persona principiante con una explicación en forma de comentario al inicio y tras la explicación emplea un ejemplo sencillo para que quede más claro de los siguientes conceptos:
 
-- uso de Fragment como envoltorio de mas de 1 elemento en el return.
-- uso de forwarding props to wrapped elements
-- uso de multiples JSX slots
-- Settings component Types dinamically
-- Setting default props values
-- Uso de onChange en etiquetas de tipo inpult para junto con useState modificar su valor y guardarlo.
-- Buena practicar de mantener un array inmutable usando el spread operator cuando se usa useState en un array.
-- Uso de lifting state up para relacionar estados de dos componentes distintos.
-- Uso de deriving states from props
+- Uso de la consola para detectar errores en nuestro código.
+- Uso de debugger para detectar errores en nuestro código.
+- Uso de strict mode para detectar errores en nuestro código
+- Uso de React DevTools en el navegador para controlar mejor nuestro código
 
-Especificaciones:-La documentación debe contener la explicación detallada de todo lo necesario para el uso de los conceptos a nivel profesional-Los ejemplos deben estar explicados con comentarios sobre lo que hacen en cada paso -El formato de entrega será markdown. Verificación:Revisa el contenido de la consulta para obtener el resultado deseado, recuerda que lo más importante es que los ejemplos estén bien explicados , tomate el tiempo necesario para obtener el mejor resultado.
+  Especificaciones:-La documentación debe contener la explicación detallada de todo lo necesario para el uso de los conceptos a nivel profesional-Los ejemplos deben estar explicados con comentarios sobre lo que hacen en cada paso -El formato de entrega será markdown. Verificación:Revisa el contenido de la consulta para obtener el resultado deseado, recuerda que lo más importante es que los ejemplos estén bien explicados , tomate el tiempo necesario para obtener el mejor resultado.
 
 genera el markdown de la documentación para descargar pero no te dejes nada de lo que has desarrollado en el primer prompt.
 

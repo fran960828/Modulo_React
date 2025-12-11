@@ -1,11 +1,11 @@
 rol: Experto en React con typescript. consulta: Haz una documentación para una persona principiante con una explicación en forma de comentario al inicio y tras la explicación emplea un ejemplo sencillo para que quede más claro de los siguientes conceptos:
 
-- Uso de la consola para detectar errores en nuestro código.
-- Uso de debugger para detectar errores en nuestro código.
-- Uso de strict mode para detectar errores en nuestro código
-- Uso de React DevTools en el navegador para controlar mejor nuestro código
+- Uso de component composition como solución al prop Drilling.
+- Uso de createContext con Provider como solución al prop Drilling y como se tipifica con typescript
+- Uso de use o useContext para emplear el valor por defecto asignado al contexto y como se tipifica con typescript.
+- Uso de createContext con Consumer (Versión más antigua)
 
-  Especificaciones:-La documentación debe contener la explicación detallada de todo lo necesario para el uso de los conceptos a nivel profesional-Los ejemplos deben estar explicados con comentarios sobre lo que hacen en cada paso -El formato de entrega será markdown. Verificación:Revisa el contenido de la consulta para obtener el resultado deseado, recuerda que lo más importante es que los ejemplos estén bien explicados , tomate el tiempo necesario para obtener el mejor resultado.
+Especificaciones:-La documentación debe contener la explicación detallada de todo lo necesario para el uso de los conceptos a nivel profesional-Los ejemplos deben estar explicados con comentarios sobre lo que hacen en cada paso -El formato de entrega será markdown. Verificación:Revisa el contenido de la consulta para obtener el resultado deseado, recuerda que lo más importante es que los ejemplos estén bien explicados , tomate el tiempo necesario para obtener el mejor resultado.
 
 genera el markdown de la documentación para descargar pero no te dejes nada de lo que has desarrollado en el primer prompt.
 

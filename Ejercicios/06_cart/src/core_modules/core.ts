@@ -18,7 +18,7 @@ export interface Ibutton extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 export interface IcontextCart {
   shoppingCart: IcartItem[];
   handleAddProduct: (id: string) => void;
-  updateProduct?: () => void;
+  handleUpdateProduct: (id:string,amount:number) => void;
 }
 
 export interface IfunctionContext {
@@ -31,3 +31,6 @@ export interface ICartModalHandle {
 export interface ICartModalProps {
   actions: ReactNode;
 }
+export type CartAction =
+  | { type: "ADD_PRODUCT"; id: string }
+  | { type: "UPDATE_PRODUCT"; id: string; amount: number };

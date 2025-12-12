@@ -1,15 +1,39 @@
 import logo from "/logo.png";
 import { Button } from "../components/Button";
 import CartContext from "../store/shopCartContext";
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import { CartModal } from "./components/cartModal";
+import type { ICartModalHandle } from "../core_modules/core";
 export function Header() {
   const { shoppingCart } = useContext(CartContext)!;
+  function handleOpenCart() {
+    dialog.current?.open();
+  }
+
   const shoppingCartItem = shoppingCart.length;
+  const dialog = useRef<ICartModalHandle>(null);
+  let actionModal = (
+    <button className="bg-transparent border-none rounded-md cursor-pointer text-[#201e1a] text-lg hover:text-[#453719]">
+      Close
+    </button>
+  );
+
+  if (shoppingCart.length > 0) {
+    actionModal = (
+      <>
+        <button className="bg-transparent border-none rounded-md cursor-pointer text-[#201e1a] text-lg hover:text-[#453719]">
+          close
+        </button>
+        <button className="bg-[#271e07] border-none rounded-md cursor-pointer text-lg text-[#f9efda] px-4 py-2 hover:text-[#382e1b]">
+          Checkout
+        </button>
+      </>
+    );
+  }
 
   return (
     <>
-      <CartModal />
+      <CartModal ref={dialog} actions={actionModal} />
       <header className="flex flex-row justify-between items-center mb-8">
         <div
           id="title"
@@ -21,7 +45,7 @@ export function Header() {
           </h1>
         </div>
         <div id="title__button">
-          <Button>Cart({shoppingCartItem})</Button>
+          <Button onClick={handleOpenCart}>Cart({shoppingCartItem})</Button>
         </div>
       </header>
     </>

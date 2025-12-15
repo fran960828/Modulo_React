@@ -1,9 +1,12 @@
-import { forwardRef, useImperativeHandle, useRef } from "react";
+import { forwardRef, useImperativeHandle, useRef,useContext } from "react";
 import {
+  type IcartItem,
   type ICartModalHandle,
   type ICartModalProps,
 } from "../../core_modules/core";
 import { createPortal } from "react-dom";
+import  CartContext  from "../../store/shopCartContext";
+import { CartList } from "./cartList";
 
 export const CartModal = forwardRef<ICartModalHandle, ICartModalProps>(
   function CartModal({ actions }, ref) {
@@ -16,6 +19,12 @@ export const CartModal = forwardRef<ICartModalHandle, ICartModalProps>(
       };
     });
 
+    const {shoppingCart}=useContext(CartContext)!
+
+    const totalCart=shoppingCart.reduce((acc:number,product:IcartItem):number=>{
+      return acc+product.quantity*product.price
+    },0)
+
     return createPortal(
       <dialog
         ref={dialog}
@@ -24,8 +33,8 @@ export const CartModal = forwardRef<ICartModalHandle, ICartModalProps>(
         <h2 className="text-2xl uppercase text-[#4f3807] m-0 font-bold">
           YOUR CART
         </h2>
-        <p>No items in cart</p>
-        <p className="text-right my-2">Cart Total: $0.00</p>
+        {shoppingCart.length===0 ? <p>No items in cart</p> : <CartList/>}
+        <p className="text-right my-2">Cart Total: ${totalCart.toFixed(2)}</p>
         <form
           action="dialog"
           className="text-lg flex flex-row gap-2 justify-end items-center "

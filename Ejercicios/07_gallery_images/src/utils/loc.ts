@@ -1,3 +1,5 @@
+import type { Iplace } from "../core/core_modules";
+
 function toRad(value: number) {
   return (value * Math.PI) / 180;
 }
@@ -22,7 +24,7 @@ function calculateDistance(
   return d;
 }
 
-export function sortPlacesByDistance(places, lat: number, lon: number) {
+export function sortPlacesByDistance(places:Iplace[], lat: number, lon: number) {
   const sortedPlaces = [...places];
   sortedPlaces.sort((a, b) => {
     const distanceA = calculateDistance(lat, lon, a.lat, a.lon);

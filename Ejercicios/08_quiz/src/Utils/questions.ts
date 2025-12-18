@@ -73,3 +73,5 @@ const QUESTIONS:Iquestions[] =[
     ],
   },
 ];
+
+export default QUESTIONS

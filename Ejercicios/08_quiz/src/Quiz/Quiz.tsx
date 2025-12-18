@@ -1,7 +1,9 @@
-import { useCallback,useRef,useState } from "react"
+import { useCallback,useState,useRef } from "react"
 import QUESTIONS from "../Utils/questions"
+import { Questions } from "../Questions/Questions"
 
 export function Quiz(){
+
     const [selectedAnswer,setSelectedAnswer]=useState<(string|null)[]>([])
     const actualAnswer=useRef<number>(0)
     actualAnswer.current=selectedAnswer.length
@@ -17,7 +19,6 @@ export function Quiz(){
         handleSelectedAnswers(null)
     },[handleSelectedAnswers])
 
-
     if (selectedAnswer.length===QUESTIONS.length){
         return(
             <div id="summary">
@@ -28,15 +29,9 @@ export function Quiz(){
     }
 
     return (
-        <div>
-            <h2 className="text-white z-10">Question</h2>
-            <ul>
-                {QUESTIONS[actualAnswer.current].answers.map((answer:string)=>(
-                    <li key={QUESTIONS[actualAnswer.current].id}>
-                        <button className="text-white z-10" onClick={()=>handleSelectedAnswers(answer)}>{answer}</button>
-                    </li>
-                ))}
-            </ul>
+        <div id="quiz" className="max-w-200 m-auto p-8 bg-linear-180-[#3e2a60]-[#321061] rounded-lg shadow-1px_1px_8px_4px_rgba(12_5_32_0.6) text-center">
+            <Questions key={actualAnswer.current}  actualAnswer={actualAnswer.current} onSelect={handleSelectedAnswers} onSkip={handleSkipAnswer}/>
+
         </div>
     )
 }

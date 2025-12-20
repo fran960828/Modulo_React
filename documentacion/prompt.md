@@ -1,10 +1,6 @@
 rol: Experto en React con typescript. consulta: Haz una documentación para una persona principiante con una explicación en forma de comentario al inicio y tras la explicación emplea un ejemplo sencillo para que quede más claro de los siguientes conceptos:
 
-- Explicación de que es un side effect.
-- Uso de use Effect: En que situaciones es conveniente usarlo y cuando es redundante y se considera mala práctica.
-- Explicación de la matriz de dependencias de useEffect: se les puede pasar props,states,functions.
-- Uso de useCallback para no recrear funciones cuando se vayan a pasar a la matriz de dependencias de useEffects.
-- Que se puede pasar a la matriz de dependencias de useCallback
+- Uso de class component para el manejo de errores (ErrorBoundary) empleando la funcion componentDidCatch
 
 Especificaciones:-La documentación debe contener la explicación detallada de todo lo necesario para el uso de los conceptos a nivel profesional-Los ejemplos deben estar explicados con comentarios sobre lo que hacen en cada paso -El formato de entrega será markdown. Verificación:Revisa el contenido de la consulta para obtener el resultado deseado, recuerda que lo más importante es que los ejemplos estén bien explicados , tomate el tiempo necesario para obtener el mejor resultado.
 

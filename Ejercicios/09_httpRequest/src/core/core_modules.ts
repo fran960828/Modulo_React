@@ -32,3 +32,10 @@ export interface IbuttonActions {
 export interface IprogressBar {
   Timer:number
 }
+
+export interface Ierror {
+    title:string,
+    message:string,
+    onConfirm?:()=>void
+}
+

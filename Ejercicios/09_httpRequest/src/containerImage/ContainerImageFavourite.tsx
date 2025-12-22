@@ -30,7 +30,7 @@ export function ContainerImageFavourite({
                 onClick={() => addRemovePlaces(place.id)}
               >
                 <img
-                  src={place.image.src}
+                  src={`http://localhost:3000/${place.image.src}`}
                   alt={place.image.alt}
                   className="w-full h-full object-cover rounded-lg"
                 />

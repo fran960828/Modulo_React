@@ -1,55 +1,70 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { ContainerImage } from "./containerImage/ContainerImage";
 import { ContainerImageFavourite } from "./containerImage/ContainerImageFavourite";
-import { AVAILABLE_PLACES } from "./utils/data";
 import { sortPlacesByDistance } from "./utils/loc";
 import type { Iplace } from "./core/core_modules";
 import { Modal } from "./modal/Modal";
 import { DeleteConfirmation } from "./modal/DeleteConfirmation";
-import { fetchAvailablePlaces } from "./httpRequest/httpRequest";
+import { fetchAvailablePlaces, updateUserPlaces } from "./httpRequest/httpRequest";
+import { ErrorRequest } from "./components/ErrorRequest";
+interface IerrorMessage {
+  message:string
+}
 
-const storedId = JSON.parse(localStorage.getItem("selectedPlaces") || "[]");
-const storedPlaces: Iplace[] = storedId
-  .map((id: string) =>
-    AVAILABLE_PLACES.find((place: Iplace) => place.id === id)
-  )
-  .filter((place: Iplace): place is Iplace => place !== undefined);
 
 function App() {
   const selectFavouritePlace = useRef<string | null>(null);
   const [placesSorted, setPlacesSorted] = useState<Iplace[]>([]);
   const [favouritePlaces, setFavouritePlaces] =
-    useState<Iplace[]>(storedPlaces);
+    useState<Iplace[]>([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [errorHttp,setErrorHttp]=useState<IerrorMessage>()
 
   useEffect(() => {
+    
     async function handlePlacesBackend() {
-      const availablePlaces = await fetchAvailablePlaces();
-
-      navigator.geolocation.getCurrentPosition(
-        (position: GeolocationPosition) => {
-          const sortedPlaces = sortPlacesByDistance(
-            availablePlaces,
-            position.coords.latitude,
-            position.coords.longitude
-          );
-          setPlacesSorted(sortedPlaces);
-        }
-      );
-    }
+        try {
+        const availablePlaces = await fetchAvailablePlaces();
+  
+        navigator.geolocation.getCurrentPosition(
+          (position: GeolocationPosition) => {
+            const sortedPlaces = sortPlacesByDistance(
+              availablePlaces,
+              position.coords.latitude,
+              position.coords.longitude
+            );
+            setPlacesSorted(sortedPlaces);
+          }
+        );
+      } catch (error:unknown) {
+        const errorMessage = error instanceof Error ? error.message : 'conexion fallida';
+        setErrorHttp({message: errorMessage})
+      }
+      }
     handlePlacesBackend();
   }, []);
 
-  function handleFavouritePlaces(id: string) {
+  async function handleFavouritePlaces(id: string) {
+    const availablePlaces = await fetchAvailablePlaces();
     setFavouritePlaces((prevFavouriteplaces) => {
       if (prevFavouriteplaces.some((place) => place.id === id)) {
         return prevFavouriteplaces;
       }
-      const place = AVAILABLE_PLACES.find((place) => place.id === id);
+      const place = availablePlaces.find((place) => place.id === id);
       return place ? [place, ...prevFavouriteplaces] : prevFavouriteplaces;
     });
-    const storedId = JSON.parse(localStorage.getItem("selectedPlaces") || "[]");
-    localStorage.setItem("selectedPlaces", JSON.stringify([id, ...storedId]));
+    try {
+      const place = availablePlaces.find((place) => place.id === id)
+      if (place) {
+        await updateUserPlaces([place,...favouritePlaces])
+      }
+    } catch (error:unknown) {
+      setFavouritePlaces(favouritePlaces)
+      const errorMessage = error instanceof Error ? error.message : 'Error al guardar el dato';
+        setErrorHttp({message: errorMessage})
+      
+    }
+
   }
 
   function handleRemovePlaces(id: string) {
@@ -68,14 +83,10 @@ function App() {
 
     setModalIsOpen(false);
 
-    const storedId = JSON.parse(localStorage.getItem("selectedPlaces") || "[]");
-    localStorage.setItem(
-      "selectedPlaces",
-      JSON.stringify(
-        storedId.filter((id: string) => id !== selectFavouritePlace.current)
-      )
-    );
   }, []);
+  function handleError(){
+    setErrorHttp({message:''})
+  }
 
   return (
     <>
@@ -86,18 +97,27 @@ function App() {
         />
       </Modal>
       <div id="container" className="flex flex-col gap-6 px-[5%] py-[2%]">
+        {
+          errorHttp ?
+          <ErrorRequest title='Error en el envio de datos' message={errorHttp.message} onConfirm={handleError}/>:
         <ContainerImageFavourite
           title="I'd like to visit..."
           description="Select the places you would like to visit below."
           places={favouritePlaces}
           addRemovePlaces={handleRemovePlaces}
         />
+        }
+
+        {!errorHttp ?
+        
         <ContainerImage
           title="Availables Places"
           description="sorting places by distances..."
           places={placesSorted}
           addRemovePlaces={handleFavouritePlaces}
-        />
+        />:
+        <ErrorRequest title="An error Ocurred" message={errorHttp.message}/>
+      }
       </div>
     </>
   );

@@ -11,31 +11,30 @@ export interface Iplace {
   lon: number;
 }
 
-export interface Icontainer{
-    title:string,
-    description:string,
-    places:Iplace[]
-    addRemovePlaces:(id:string)=>void
+export interface Icontainer {
+  title: string;
+  description: string;
+  places: Iplace[];
+  addRemovePlaces: (id: string) => void;
 }
 
 export interface Imodal {
-  open:boolean,
-  children:ReactNode,
-  onClose:()=>void
+  open: boolean;
+  children: ReactNode;
+  onClose: () => void;
 }
 
 export interface IbuttonActions {
-  onConfirm:()=>void,
-  onCancel:()=>void
+  onConfirm: () => void;
+  onCancel: () => void;
 }
 
 export interface IprogressBar {
-  Timer:number
+  Timer: number;
 }
 
 export interface Ierror {
-    title:string,
-    message:string,
-    onConfirm?:()=>void
+  title: string;
+  message: string;
+  onConfirm?: () => void;
 }
-

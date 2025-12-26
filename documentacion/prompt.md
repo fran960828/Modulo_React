@@ -1,12 +1,14 @@
 rol: Experto en React con typescript. consulta: Haz una documentación para una persona principiante con una explicación en forma de comentario al inicio y tras la explicación emplea un ejemplo sencillo para que quede más claro de los siguientes conceptos:
 
-- Uso de http request empleando fetch usando metodo get con then dentro de useEffect.
-- Uso de http request empleando una función dentro de useEffect con async y await con metodo get.
-- Manejo de errores con try y catch.
-- Uso de tres states, uno para la obtención de datos, otro para señalar la carga de datos y otro para el manejo de errores.
-- Uso de http request con metodo put
-- Uso de http request con metodo delete
-
+- Uso de htmlFor en la etiqueta label al usar react.
+- Uso de type en button dentro de un formulario para evitar el comportamiento submit por defecto.
+- Uso de onSubmit en la etiqueta form y dentro de la función que se pase usar event.PreventDefault
+- Manejo del contenido de inputs con useState:Ventajas y Desventajas.
+- Manejo del contenido de inputs con useRef:Ventajas y Desventajas.
+- Uso de new FormData para el manejo de formularios con muchas entradas(Manejo de inputs,selects,checkbox y demás)
+- Limpiar el formulario mediante type reset en un button o dinamicamente con event.target.reset().
+- Uso de validaciones usando onChange para capturar cada cambio.
+- Uso de validaciones usando onBlur
 
 Especificaciones:-La documentación debe contener la explicación detallada de todo lo necesario para el uso de los conceptos a nivel profesional-Los ejemplos deben estar explicados con comentarios sobre lo que hacen en cada paso -El formato de entrega será markdown. Verificación:Revisa el contenido de la consulta para obtener el resultado deseado, recuerda que lo más importante es que los ejemplos estén bien explicados , tomate el tiempo necesario para obtener el mejor resultado.
 

@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 export interface AvailableMeals {
   id: string;
   name: string;
@@ -7,6 +9,7 @@ export interface AvailableMeals {
 }
 
 export interface CartItem {
+  id:string,
   name: string;
   quantity: number;
   price: number;
@@ -38,3 +41,16 @@ export interface CardProduct {
   isLoading: boolean;
   errorLoad: ErrorLoad | null;
 }
+
+export interface ContextRest {
+  stateCart:CartItem[],
+  handleAddProduct:(id:string)=>void
+  handleUpdateProduct:(id:string,amount:number)=>void
+}
+
+export interface ContextRestFunction {
+  children: ReactNode;
+}
+export type CartRestAction =
+  | { type: "ADD_PRODUCT"; id: string }
+  | { type: "UPDATE_PRODUCT"; id: string; amount: number };

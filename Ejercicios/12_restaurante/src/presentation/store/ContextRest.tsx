@@ -22,7 +22,7 @@ switch (actions.type) {
         const product = data.find(p => p.id === actions.id);
         if (!product) return state;
 
-        updatedCart.push({ ...product, quantity: 1 });
+        updatedCart.push({ ...product, price: Number(product.price), quantity: 1 });
       }
 
       return updatedCart;

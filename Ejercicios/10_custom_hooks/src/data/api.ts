@@ -21,7 +21,7 @@ export async function fetchUserPlaces(): Promise<Iplace[]> {
 }
 
 export async function updateUserPlaces(places: Iplace[]) {
-  const response = await fetch("http://localhost:3000/user-placess", {
+  const response = await fetch("http://localhost:3000/user-places", {
     method: "PUT",
     body: JSON.stringify({ places }),
     headers: {

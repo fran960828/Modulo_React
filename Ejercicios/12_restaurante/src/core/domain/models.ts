@@ -8,11 +8,8 @@ export interface AvailableMeals {
   image: string;
 }
 
-export interface CartItem {
-  id:string,
-  name: string;
+export interface CartItem extends AvailableMeals {
   quantity: number;
-  price: number;
 }
 
 export interface Form {
@@ -43,14 +40,22 @@ export interface CardProduct {
 }
 
 export interface ContextRest {
-  stateCart:CartItem[],
-  handleAddProduct:(id:string)=>void
-  handleUpdateProduct:(id:string,amount:number)=>void
+  stateCart: CartItem[];
+  handleAddProduct: (product: AvailableMeals) => void;
+  handleUpdateProduct: (id: string, amount: number) => void;
 }
 
 export interface ContextRestFunction {
   children: ReactNode;
 }
 export type CartRestAction =
-  | { type: "ADD_PRODUCT"; id: string }
+  | { type: "ADD_PRODUCT"; product: AvailableMeals }
   | { type: "UPDATE_PRODUCT"; id: string; amount: number };
+
+export interface ModalCart {
+  open: () => void;
+}
+
+export interface ModalActions {
+  actions: ReactNode;
+}

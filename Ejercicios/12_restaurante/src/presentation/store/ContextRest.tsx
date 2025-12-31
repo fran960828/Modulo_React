@@ -1,48 +1,42 @@
 import { createContext, useReducer } from "react";
-import type { ContextRest, ContextRestFunction, CartRestAction, CartItem } from "../../core/domain/models";
-import { useFetch } from "../hooks/useFetch";
-import { getMenuRestaurant } from "../../config/dependencies";
+import type {
+  ContextRest,
+  ContextRestFunction,
+  CartRestAction,
+  CartItem,
+  AvailableMeals,
+} from "../../core/domain/models";
+export const contextRestaurant = createContext<ContextRest>({} as ContextRest);
 
-const contextRestaurant=createContext<ContextRest|undefined>(undefined)
-const {data}=useFetch({fnFetch:getMenuRestaurant,initialValue:[]})
-
-function restaurantCartReducer(state:CartItem[],actions:CartRestAction){
-switch (actions.type) {
+// --- REDUCER (Ahora es una función pura) ---
+function restaurantCartReducer(
+  state: CartItem[],
+  action: CartRestAction
+): CartItem[] {
+  switch (action.type) {
     case "ADD_PRODUCT": {
-      const updatedCart = [...state];
-      const itemIndex = updatedCart.findIndex(item => item.id === actions.id);
+      const { product } = action; // El producto ya viene aquí completo
+      const itemIndex = state.findIndex((item) => item.id === product.id);
 
       if (itemIndex !== -1) {
-        const existing = updatedCart[itemIndex];
-        updatedCart[itemIndex] = {
-          ...existing,
-          quantity: existing.quantity + 1
-        };
-      } else {
-        const product = data.find(p => p.id === actions.id);
-        if (!product) return state;
-
-        updatedCart.push({ ...product, price: Number(product.price), quantity: 1 });
+        return state.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
       }
 
-      return updatedCart;
+      return [...state, { ...product, quantity: 1 }];
     }
 
     case "UPDATE_PRODUCT": {
-      const updatedCart = [...state];
-      const index = updatedCart.findIndex(item => item.id === actions.id);
-      if (index === -1) return state;
-
-      const updatedItem = { ...updatedCart[index] };
-      updatedItem.quantity += actions.amount;
-
-      if (updatedItem.quantity <= 0) {
-        updatedCart.splice(index, 1);
-      } else {
-        updatedCart[index] = updatedItem;
-      }
-
-      return updatedCart;
+      return state
+        .map((item) =>
+          item.id === action.id
+            ? { ...item, quantity: item.quantity + action.amount }
+            : item
+        )
+        .filter((item) => item.quantity > 0); // Elimina si es 0 o menos
     }
 
     default:
@@ -50,24 +44,25 @@ switch (actions.type) {
   }
 }
 
+// --- PROVIDER ---
+export function ContextRestProvider({ children }: ContextRestFunction) {
+  // Traemos la data aquí, no en el reducer
 
+  const [stateCart, dispatch] = useReducer(restaurantCartReducer, []);
 
-
-export function ContextRestProvider({children}:ContextRestFunction){
-    const [stateCart,dispatch]=useReducer(restaurantCartReducer,[])
-
-    function handleAddProduct(id: string) {
-    dispatch({ type: "ADD_PRODUCT", id });
+  function handleAddProduct(product: AvailableMeals) {
+    dispatch({ type: "ADD_PRODUCT", product }); // Enviamos el producto completo
   }
 
   function handleUpdateProduct(id: string, amount: number) {
     dispatch({ type: "UPDATE_PRODUCT", id, amount });
   }
 
-    return(
-        <contextRestaurant.Provider value={{stateCart,handleAddProduct,handleUpdateProduct}}>
-            {children}
-        </contextRestaurant.Provider>
-
-    )
+  return (
+    <contextRestaurant.Provider
+      value={{ stateCart, handleAddProduct, handleUpdateProduct }}
+    >
+      {children}
+    </contextRestaurant.Provider>
+  );
 }

@@ -8,7 +8,9 @@ export function MenuContainer() {
     initialValue: [],
   });
 
-  return <section id="menu">
-    <ProductCard data={data} isLoading={isLoading} errorLoad={errorLoad}/>
-  </section>;
+  return (
+    <section>
+      <ProductCard data={data} isLoading={isLoading} errorLoad={errorLoad} />
+    </section>
+  );
 }

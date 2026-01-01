@@ -1,7 +1,6 @@
-import { createContext, useReducer } from "react";
+import { createContext, useCallback, useReducer, type ReactNode } from "react";
 import type {
   ContextRest,
-  ContextRestFunction,
   CartRestAction,
   CartItem,
   AvailableMeals,
@@ -38,6 +37,9 @@ function restaurantCartReducer(
         )
         .filter((item) => item.quantity > 0); // Elimina si es 0 o menos
     }
+    case "CLEAR_CART": {
+      return [];
+    }
 
     default:
       return state;
@@ -45,7 +47,7 @@ function restaurantCartReducer(
 }
 
 // --- PROVIDER ---
-export function ContextRestProvider({ children }: ContextRestFunction) {
+export function ContextRestProvider({ children }: { children: ReactNode }) {
   // Traemos la data aquí, no en el reducer
 
   const [stateCart, dispatch] = useReducer(restaurantCartReducer, []);
@@ -57,10 +59,18 @@ export function ContextRestProvider({ children }: ContextRestFunction) {
   function handleUpdateProduct(id: string, amount: number) {
     dispatch({ type: "UPDATE_PRODUCT", id, amount });
   }
+  const handleClearCart = useCallback(() => {
+    dispatch({ type: "CLEAR_CART" });
+  }, []);
 
   return (
     <contextRestaurant.Provider
-      value={{ stateCart, handleAddProduct, handleUpdateProduct }}
+      value={{
+        stateCart,
+        handleAddProduct,
+        handleUpdateProduct,
+        handleClearCart,
+      }}
     >
       {children}
     </contextRestaurant.Provider>

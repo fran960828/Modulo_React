@@ -1,5 +1,3 @@
-import type { ReactNode } from "react";
-
 export interface AvailableMeals {
   id: string;
   name: string;
@@ -12,16 +10,17 @@ export interface CartItem extends AvailableMeals {
   quantity: number;
 }
 
-export interface Form {
-  fullName: string;
-  email: string;
-  address: string;
-  postalCode: string;
-  city: string;
-}
-
-export interface Order extends CartItem, Form {
-  totalPrice: number;
+export interface order {
+  order: {
+    items: CartItem[];
+    customer: {
+      name: string;
+      email: string;
+      street: string;
+      "postal-code": string;
+      city: string;
+    };
+  };
 }
 
 export interface ErrorLoad {
@@ -43,19 +42,32 @@ export interface ContextRest {
   stateCart: CartItem[];
   handleAddProduct: (product: AvailableMeals) => void;
   handleUpdateProduct: (id: string, amount: number) => void;
+  handleClearCart: () => void;
 }
 
-export interface ContextRestFunction {
-  children: ReactNode;
-}
 export type CartRestAction =
   | { type: "ADD_PRODUCT"; product: AvailableMeals }
-  | { type: "UPDATE_PRODUCT"; id: string; amount: number };
+  | { type: "UPDATE_PRODUCT"; id: string; amount: number }
+  | { type: "CLEAR_CART" };
 
-export interface ModalCart {
-  open: () => void;
+export type FormState = {
+  success: boolean;
+  message: string;
+  errors?: ValidationError[];
+  inputs?: Record<string, string>; // Para persistir datos
+};
+
+export interface ValidationError {
+  field: string;
+  message: string;
 }
 
-export interface ModalActions {
-  actions: ReactNode;
+export type UIStatus = "IDLE" | "CART" | "FORM" | "SUCCESS";
+
+export interface IContextGlobal {
+  stateUI: UIStatus;
+  handleUICart: () => void;
+  handleUIForm: () => void;
+  handleUISuccess: () => void;
+  closeAll: () => void;
 }

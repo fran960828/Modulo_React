@@ -1,4 +1,4 @@
-import type { Order } from "../domain/models";
+import type { order } from "../domain/models";
 import type { MenuRepository, OrderRepository } from "./ports";
 
 // getMenu.ts
@@ -8,6 +8,6 @@ export const getMenu = (menuRepository: MenuRepository) => async () => {
 
 // checkout.ts
 export const checkout =
-  (orderRepository: OrderRepository) => async (order: Order) => {
+  (orderRepository: OrderRepository) => async (order: order) => {
     return orderRepository.sendOrder(order);
   };

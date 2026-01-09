@@ -1,20 +1,15 @@
 import type { GetEventRepository } from "../application/ports";
-import type { EventGet } from "../domain/models";
+import type { getEventResponse, getEventsResponse } from "../domain/models";
 import { httpClient } from "./api";
-
-const url="http://localhost:8080/events/"
+import { url } from "../domain/services";
 
 export const getRepositoryImpl: GetEventRepository = {
   getEvent: async (id) => {
-    const dto = await httpClient.get<EventGet>(
-      url+id
-    );
+    const dto = await httpClient.get<getEventResponse>(url + id);
     return dto;
   },
   getEventsList: async () => {
-    const dto = await httpClient.get<EventGet[]>(
-      url
-    );
+    const dto = await httpClient.get<getEventsResponse>(url);
     return dto;
   },
 };

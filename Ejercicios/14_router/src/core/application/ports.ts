@@ -1,15 +1,14 @@
 // foodRepository.ts
 
 import type {
+  EventGet,
   EventPatch,
   EventPost,
-  getEventResponse,
-  getEventsResponse,
 } from "../domain/models";
 
 export interface GetEventRepository {
-  getEvent: (id: string) => Promise<getEventResponse>;
-  getEventsList: () => Promise<getEventsResponse>;
+  getEvent: (id: string) => Promise<EventGet>;
+  getEventsList: () => Promise<EventGet[]>;
 }
 
 export interface PostEventRepository {
